@@ -30,6 +30,6 @@ const configureGracefulShutdown = (server) => {
 };
 
 module.exports = {
-    createServer,
-    configureGracefulShutdown
+    configureGracefulShutdown,
+    createServer
 };

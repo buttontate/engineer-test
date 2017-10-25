@@ -18,7 +18,7 @@ describe('server services', () => {
     beforeEach(() => {
         sandbox = sinon.sandbox.create();
 
-        expectedServer  = {
+        expectedServer = {
             [chance.string()]: chance.string(),
             connection: sandbox.stub(),
             stop: sandbox.stub()
