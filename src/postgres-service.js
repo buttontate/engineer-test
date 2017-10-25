@@ -17,10 +17,11 @@ const getDatabasePool = async () => {
         });
 
         await pool.query('select * from information_schema.tables');
-
     } catch (error) {
         throw new Error('Unable to connect to PostgreSQL database.  App will restart and try again');
     }
+
+    return pool;
 };
 
 module.exports = {

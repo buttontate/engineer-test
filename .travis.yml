@@ -1,0 +1,13 @@
+before_install:
+  - sudo apt-get update
+  - sudo apt-get -y -o Dpkg::Options::="--force-confnew" install docker-ce
+  - docker --version
+script: docker build . --target builder
+branches:
+  only: master
+services:
+  - docker
+notifications:
+  email:
+    on_failure: always
+    on_success: change
