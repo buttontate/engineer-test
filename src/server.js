@@ -5,13 +5,7 @@ const {createServer, configureGracefulShutdown} = require('./server-services');
 (async () => {
     const server = createServer();
 
-    try {
-        await getDatabasePool();
-    } catch (error) {
-        console.error(error);
-
-        return process.exit(1);
-    }
+    await getDatabasePool();
 
     configureGracefulShutdown(server);
 
