@@ -1,7 +1,10 @@
+const fs = require('fs');
+const path = require('path');
+
 const Chance = require('chance');
-const proxyquire = require('proxyquire');
 const {expect} = require('chai');
 const hapi = require('hapi');
+const proxyquire = require('proxyquire');
 const sinon = require('sinon');
 
 const postgresService = require('../src/postgres-service');
@@ -37,6 +40,41 @@ describe('server services', () => {
 
     afterEach(() => {
         sandbox.restore();
+    });
+
+    describe('apply controllers', () => {
+        let routeStub,
+            expectedControllers;
+
+        beforeEach(() => {
+            routeStub = sandbox.stub();
+
+            expectedControllers = [];
+
+            const serverInstance = {
+                route: routeStub
+            };
+            const controllersDirectoryNormalized = path.join(__dirname, '../src/controllers/');
+
+            fs.readdirSync(controllersDirectoryNormalized).forEach((file) => { // eslint-disable-line no-sync
+                const controllerModule = require(controllersDirectoryNormalized + file)(); // eslint-disable-line import/no-dynamic-require
+
+                expectedControllers.push(controllerModule);
+            });
+
+            serverServices.applyControllers(serverInstance);
+        });
+
+        it('should ensure all controllers located in controllers directory are passed to the server', () => {
+            sinon.assert.callCount(routeStub, expectedControllers.length);
+
+            expectedControllers.forEach((expectedController, index) => {
+                const actualController = routeStub.getCall(index).args[0];
+
+                expect(expectedController).to.have.property('method').which.equals(actualController.method);
+                expect(expectedController).to.have.property('path').which.equals(actualController.path);
+            });
+        });
     });
 
     describe('createServer', () => {

@@ -28,6 +28,7 @@ describe('server', () => {
         sandbox.stub(postgresService, 'getDatabasePool');
         sandbox.stub(serverServices, 'createServer').returns(expectedServer);
         sandbox.stub(serverServices, 'configureGracefulShutdown');
+        sandbox.stub(serverServices, 'applyControllers');
     });
 
     afterEach(() => {
@@ -52,6 +53,17 @@ describe('server', () => {
         serverServices.configureGracefulShutdown.callsFake(() => {
             sinon.assert.calledOnce(serverServices.configureGracefulShutdown);
             sinon.assert.calledWith(serverServices.configureGracefulShutdown, expectedServer);
+
+            done();
+        });
+
+        importServer();
+    });
+
+    it('should call server services to configure the controllers', (done) => {
+        serverServices.applyControllers.callsFake(() => {
+            sinon.assert.calledOnce(serverServices.applyControllers);
+            sinon.assert.calledWith(serverServices.applyControllers, expectedServer);
 
             done();
         });
