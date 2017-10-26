@@ -32,6 +32,11 @@ Tests will run when you run `docker-compose` but you can run tests at any time u
 npm test
 ```
 
-**Note on .sql files:**
+## Tips
 
-These will be run in alphabetical order, so you'll want to follow our naming convention here (your next new .sql file would start with `02`).
+1. Adminer, a lightweight program to view database schemas and execute queries, is included in the docker-compose
+schema.  You can access it by visiting http://localhost:8080/?pgsql=db&username=postgres&db=postgres&ns=public after
+starting `docker-compose up`.
+2. The `.sql` files located in the `postgres` directory will be executed in alphabetical order whenever a new PostgreSQL
+image is built.  A new image will be built every time you run `docker-compose up` with the `--build` flag. You will want
+to follow our naming convention that we have established (your next new `.sql` file would start with `02`).
