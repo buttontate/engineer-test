@@ -46,28 +46,6 @@ describe('server', () => {
         sinon.assert.calledOnce(postgresService.getDatabasePool);
     });
 
-    it('should catch any errors when getting the database pool fails', (done) => {
-        const expectedErrorMessage = chance.string();
-        const expectedError = new Error(expectedErrorMessage);
-
-        postgresService.getDatabasePool.resetBehavior();
-        postgresService.getDatabasePool.rejects(expectedError);
-
-        console.error.resetHistory();
-
-        process.exit.callsFake(() => {
-            sinon.assert.calledOnce(console.error);
-            sinon.assert.calledWith(console.error, expectedError);
-
-            sinon.assert.calledOnce(process.exit);
-            sinon.assert.calledWith(process.exit, 1);
-
-            done();
-        });
-
-        importServer();
-    });
-
     it('should configure a graceful shutdown', (done) => {
         serverServices.configureGracefulShutdown.resetHistory();
 
