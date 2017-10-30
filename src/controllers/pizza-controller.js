@@ -1,10 +1,11 @@
 const postgresService = require('../postgres-service');
+const {selectAllPizzasQuery} = require('../queries');
 
 const pizzaController = () => ({
     handler: async (request, reply) => {
         try {
             const databasePool = await postgresService.getDatabasePool();
-            const pizzas = await databasePool.query('select * from pizza');
+            const pizzas = await databasePool.query(selectAllPizzasQuery);
 
             reply(pizzas.rows).code(200);
         } catch (error) {

@@ -4,6 +4,7 @@ const Chance = require('chance');
 
 const pizzaController = require('../../src/controllers/pizza-controller');
 const postgresService = require('../../src/postgres-service');
+const {selectAllPizzasQuery} = require('../../src/queries');
 
 describe('pizza controller', () => {
     let sandbox,
@@ -51,7 +52,7 @@ describe('pizza controller', () => {
 
         sinon.assert.calledOnce(postgresService.getDatabasePool);
         sinon.assert.calledOnce(expectedDatabasePool.query);
-        sinon.assert.calledWith(expectedDatabasePool.query, 'select * from pizza');
+        sinon.assert.calledWith(expectedDatabasePool.query, selectAllPizzasQuery);
 
         sinon.assert.calledOnce(replyStub);
         sinon.assert.calledWith(replyStub, expectedPizzas.rows);
@@ -69,7 +70,7 @@ describe('pizza controller', () => {
 
         sinon.assert.calledOnce(postgresService.getDatabasePool);
         sinon.assert.calledOnce(expectedDatabasePool.query);
-        sinon.assert.calledWith(expectedDatabasePool.query, 'select * from pizza');
+        sinon.assert.calledWith(expectedDatabasePool.query, selectAllPizzasQuery);
 
         sinon.assert.calledOnce(replyStub);
 
