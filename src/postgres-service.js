@@ -10,7 +10,7 @@ const getDatabasePool = () => new Promise((resolve) => {
             try {
                 pool = new Pool({
                     database: 'postgres',
-                    host: 'db',
+                    host: process.env.NODE_ENV === 'docker' ? 'db' : 'localhost',
                     password: 'password',
                     port: 5432,
                     user: 'postgres'

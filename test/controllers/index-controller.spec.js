@@ -5,6 +5,8 @@ const sinon = require('sinon');
 const {expect} = require('chai');
 const Chance = require('chance');
 const proxyquire = require('proxyquire');
+const markdownItAnchor = require('markdown-it-anchor');
+const markdownItTableOfContents = require('markdown-it-table-of-contents');
 
 describe('index controller', () => {
     const chance = new Chance();
@@ -13,6 +15,7 @@ describe('index controller', () => {
         sandbox,
         markdownItStub,
         renderStub,
+        useStub,
         replyStub;
 
     const importIndexController = () => proxyquire('../../src/controllers/index-controller', {
@@ -23,8 +26,11 @@ describe('index controller', () => {
         sandbox = sinon.sandbox.create();
 
         renderStub = sandbox.stub();
+        useStub = sandbox.stub();
+
         markdownItStub = sandbox.stub().returns({
-            render: renderStub
+            render: renderStub,
+            use: useStub
         });
 
         replyStub = sandbox.stub();
@@ -43,6 +49,13 @@ describe('index controller', () => {
 
         expect(indexRoute.path).to.equal('/');
         expect(indexRoute.method).to.equal('GET');
+    });
+
+    it('should use the anchor and table of contents plugins for markdown-it', () => {
+        sinon.assert.calledWithNew(markdownItStub);
+
+        sinon.assert.calledWith(useStub, markdownItAnchor);
+        sinon.assert.calledWith(useStub, markdownItTableOfContents);
     });
 
     it('should reply with the README.md file rendered in HTML', async () => {

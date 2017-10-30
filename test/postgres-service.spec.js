@@ -9,11 +9,18 @@ describe('postgres service', () => {
     const importPostgresService = () => proxyquire('../src/postgres-service', {});
 
     let sandbox,
+        oldProcessEnv,
         expectedPool,
         postgresService;
 
+    before(() => {
+        oldProcessEnv = process.env.NODE_ENV;
+    });
+
     beforeEach(() => {
         sandbox = sinon.sandbox.create();
+
+        process.env.NODE_ENV = 'docker';
 
         expectedPool = {
             database: 'postgres',
@@ -36,6 +43,10 @@ describe('postgres service', () => {
         sandbox.restore();
     });
 
+    after(() => {
+        process.env.NODE_ENV = oldProcessEnv;
+    });
+
     it('should create a new database pool and call query', async () => {
         const actualPool = await postgresService.getDatabasePool();
 
@@ -43,6 +54,26 @@ describe('postgres service', () => {
         sinon.assert.calledWith(expectedPool.query, 'select * from information_schema.tables');
 
         delete expectedPool.query;
+
+        sinon.assert.calledOnce(pg.Pool);
+        sinon.assert.calledWith(pg.Pool, expectedPool);
+
+        sinon.assert.calledWithNew(pg.Pool);
+
+        expect(expectedPool).to.deep.equal(actualPool);
+    });
+
+    it('should attempt to connect to the database via localhost if not running in docker', async () => {
+        delete process.env.NODE_ENV;
+
+        const actualPool = await postgresService.getDatabasePool();
+
+        sinon.assert.calledOnce(expectedPool.query);
+        sinon.assert.calledWith(expectedPool.query, 'select * from information_schema.tables');
+
+        delete expectedPool.query;
+
+        expectedPool.host = 'localhost';
 
         sinon.assert.calledOnce(pg.Pool);
         sinon.assert.calledWith(pg.Pool, expectedPool);

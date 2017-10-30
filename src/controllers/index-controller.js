@@ -2,8 +2,13 @@ const fs = require('fs');
 const path = require('path');
 
 const MarkdownIt = require('markdown-it');
+const markdownItAnchor = require('markdown-it-anchor');
+const markdownItTableOfContents = require('markdown-it-table-of-contents');
 
 const markdownRenderer = new MarkdownIt();
+
+markdownRenderer.use(markdownItAnchor);
+markdownRenderer.use(markdownItTableOfContents);
 
 const getFileContents = (filePath) => new Promise((resolve) => {
     fs.readFile(filePath, (error, data) => {
