@@ -8,6 +8,7 @@ COPY ./test ./test
 
 COPY yarn.lock .
 COPY package.json .
+COPY README.md .
 
 RUN yarn install
 
@@ -24,6 +25,7 @@ WORKDIR /usr/src/app
 COPY --from=builder /usr/src/app/src ./src
 COPY --from=builder /usr/src/app/yarn.lock .
 COPY --from=builder /usr/src/app/package.json .
+COPY --from=builder /usr/src/app/README.md .
 
 RUN yarn install --production
 
