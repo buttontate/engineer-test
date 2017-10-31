@@ -4,8 +4,6 @@ EXPOSE 5555
 RUN mkdir -p /usr/src/app
 WORKDIR /usr/src/app
 
-COPY ./src ./src
-
 COPY yarn.lock .
 COPY package.json .
 

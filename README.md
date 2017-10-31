@@ -74,6 +74,9 @@ Once you have this installed, here are some of the commands you'll want to use t
 5. `docker-compose rm`: Completely removes all containers defined in `docker-compose.yml` and any created volumes on the
    host machine. This is useful if you want to run the migration scripts against your PostgreSQL database.
 
+After running `docker-compose up --build`, the app and database will start, and the app will be live at `localhost:5555`.
+Any changes made in your local `src` folder will automatically reload the app, so you can view those changes instantly.
+
 # Tips
 
 Here are some tips and tricks that might help you while working on this test.
@@ -136,19 +139,6 @@ Adminer is a lightweight program to view database schemas and execute arbitrary 
 the running containers in `docker-compose.yml`, and you can use it to test your queries before adding them to your app.
 While the container is running, visit the webapp by clicking [here](http://localhost:8080/?pgsql=db&username=postgres&db=postgres&ns=public).
 The password is `password`.
-
-## Running the Node.JS application locally
-
-For a faster feedback loop, you may be interested in running the Node.JS application on your host machine, while running
-the PostgreSQL database through docker.  If you would like to do this, you will need to have [Node.JS](https://nodejs.org/en/download/current/)
-installed on your local machine.  You can follow these steps to run the app locally:
-
-1. Start the PostgreSQL database: `docker-compose up db adminer`
-2. In another terminal tab, install the needed dependencies: `npm install`
-2. Start the Node.JS application locally: `npm start`
-
-This will run Node.JS on your host machine while using Docker to run the database.  At any time, you can use `Ctrl + C` to
-stop your locally running Node.JS app and start it again using `npm start` to see any changes you make.
 
 ## REST Client
 

@@ -9,7 +9,7 @@
   },
   "scripts": {
     "lint": "eslint . --ext .json --ext .js",
-    "start": "node src/server.js",
+    "start": "nodemon ./src/server.js --watch src",
     "test": "mocha test"
   },
   "author": "",
@@ -17,6 +17,7 @@
   "dependencies": {
     "hapi": "^16.6.2",
     "joi": "10.6.0",
+    "nodemon": "^1.12.1",
     "pg": "^7.3.0"
   },
   "devDependencies": {
