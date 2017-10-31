@@ -17,9 +17,6 @@
   "dependencies": {
     "hapi": "^16.6.2",
     "joi": "10.6.0",
-    "markdown-it": "^8.4.0",
-    "markdown-it-anchor": "^4.0.0",
-    "markdown-it-table-of-contents": "^0.3.2",
     "pg": "^7.3.0"
   },
   "devDependencies": {

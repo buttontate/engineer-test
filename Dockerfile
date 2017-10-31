@@ -8,7 +8,6 @@ COPY ./src ./src
 
 COPY yarn.lock .
 COPY package.json .
-COPY README.md .
 
 RUN yarn install --production
 
