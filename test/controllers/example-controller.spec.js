@@ -1,12 +1,13 @@
 const sinon = require('sinon');
 const {expect} = require('chai');
 const Chance = require('chance');
+const boom = require('boom');
 
-const pizzaController = require('../../src/controllers/pizza-controller');
+const exampleController = require('../../src/controllers/example-controller');
 const postgresService = require('../../src/postgres-service');
-const {selectAllPizzasQuery} = require('../../src/queries');
+const {getCurrentTimestampQuery} = require('../../src/queries');
 
-describe('pizza controller', () => {
+describe('example controller', () => {
     let sandbox,
         codeStub,
         replyStub,
@@ -33,48 +34,52 @@ describe('pizza controller', () => {
         sandbox.restore();
     });
 
-    it('should define a route for GET /pizzas', () => {
-        const pizzaRoute = pizzaController();
+    it('should define a route for POST /pizzas/{pizzaId}/order/', () => {
+        const exampleRoute = exampleController();
 
-        expect(pizzaRoute.method).to.equal('GET');
-        expect(pizzaRoute.path).to.equal('/pizzas');
+        expect(exampleRoute.method).to.equal('GET');
+        expect(exampleRoute.path).to.equal('/time');
     });
 
-    it('should reply with a list of pizzas', async () => {
-        const pizzaRoute = pizzaController();
-        const expectedPizzas = {
-            rows: chance.n(chance.word, chance.d6())
+    it('should reply with the timestamp', async () => {
+        const exampleRoute = exampleController();
+        const expectedTime = chance.timestamp();
+        const expectedQueryResult = {
+            rows: [expectedTime]
         };
 
-        expectedDatabasePool.query.resolves(expectedPizzas);
+        expectedDatabasePool.query.resolves(expectedQueryResult);
 
-        await pizzaRoute.handler(undefined, replyStub);
+        await exampleRoute.handler(undefined, replyStub);
 
         sinon.assert.calledOnce(postgresService.getDatabasePool);
+
         sinon.assert.calledOnce(expectedDatabasePool.query);
-        sinon.assert.calledWith(expectedDatabasePool.query, selectAllPizzasQuery);
+        sinon.assert.calledWith(expectedDatabasePool.query, getCurrentTimestampQuery);
 
         sinon.assert.calledOnce(replyStub);
-        sinon.assert.calledWith(replyStub, expectedPizzas.rows);
+        sinon.assert.calledWith(replyStub, expectedTime);
 
         sinon.assert.calledOnce(codeStub);
         sinon.assert.calledWith(codeStub, 200);
     });
 
     it('should return an internal server error if getting the pizzas fails', async () => {
-        const pizzaRoute = pizzaController();
+        const orderRoute = exampleController();
 
         expectedDatabasePool.query.rejects();
 
-        await pizzaRoute.handler(undefined, replyStub);
+        await orderRoute.handler(undefined, replyStub);
 
         sinon.assert.calledOnce(postgresService.getDatabasePool);
         sinon.assert.calledOnce(expectedDatabasePool.query);
-        sinon.assert.calledWith(expectedDatabasePool.query, selectAllPizzasQuery);
+        sinon.assert.calledWith(expectedDatabasePool.query, getCurrentTimestampQuery);
 
         sinon.assert.calledOnce(replyStub);
 
-        sinon.assert.calledOnce(codeStub);
-        sinon.assert.calledWith(codeStub, 500);
+        const expectedError = boom.internal();
+        const actualError = replyStub.firstCall.args[0];
+
+        expect(actualError.toString()).to.deep.equal(expectedError.toString());
     });
 });

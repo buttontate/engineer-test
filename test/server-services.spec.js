@@ -56,8 +56,8 @@ describe('server services', () => {
             };
             const controllersDirectoryNormalized = path.join(__dirname, '../src/controllers/');
 
-            fs.readdirSync(controllersDirectoryNormalized).forEach((file) => { // eslint-disable-line no-sync
-                const controllerModule = require(controllersDirectoryNormalized + file)(); // eslint-disable-line import/no-dynamic-require
+            fs.readdirSync(controllersDirectoryNormalized).forEach((file) => {
+                const controllerModule = require(controllersDirectoryNormalized + file)();
 
                 expectedControllers.push(controllerModule);
             });

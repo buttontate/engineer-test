@@ -15,6 +15,7 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "boom": "4.0.0",
     "hapi": "^16.6.2",
     "joi": "10.6.0",
     "nodemon": "^1.12.1",

@@ -1,7 +1,6 @@
 const {getDatabasePool} = require('./postgres-service');
 const {applyControllers, createServer, configureGracefulShutdown} = require('./server-services');
 
-/* eslint-disable consistent-return */
 (async () => {
     const server = createServer();
 
@@ -21,4 +20,3 @@ const {applyControllers, createServer, configureGracefulShutdown} = require('./s
         console.log(`Server running at: ${server.info.uri}`);
     });
 })();
-/* eslint-enable */

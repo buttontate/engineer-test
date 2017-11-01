@@ -8,8 +8,8 @@ const {getDatabasePool} = require('./postgres-service');
 const applyControllers = (server) => {
     const controllersDirectoryNormalized = path.join(__dirname, './controllers/');
 
-    fs.readdirSync(controllersDirectoryNormalized).forEach((file) => { // eslint-disable-line no-sync
-        const controllerModule = require(controllersDirectoryNormalized + file); // eslint-disable-line import/no-dynamic-require
+    fs.readdirSync(controllersDirectoryNormalized).forEach((file) => {
+        const controllerModule = require(controllersDirectoryNormalized + file);
 
         server.route(controllerModule());
     });
