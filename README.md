@@ -89,6 +89,9 @@ Once you have this installed, here are some of the commands you'll want to use t
 After running `docker-compose up --build`, the app and database will start, and the app will be live at `localhost:5555`.
 Any changes made in your local `src` folder will automatically reload the app, so you can view those changes instantly.
 
+**Note for Linux users:** Be sure to follow the Docker post-installation docs found [here](https://docs.docker.com/engine/installation/linux/linux-postinstall/).
+`docker-compose` may return errors if not configured correctly.
+
 ## Tips
 
 Here are some tips and tricks that might help you while working on this test.
