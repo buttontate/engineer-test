@@ -114,10 +114,10 @@ An example controller that responds with the current time has been provided in `
 
 ### Request Validation
 
-Joi, a module we commonly use for request validation, has been provided for you to use.  You are free to install another module
-or roll your own solution if your would prefer.
+Joi, a module we commonly use for request validation, has been provided for you to use.  You are free to install another module or roll your own solution if your would prefer.
 
 The API documentation for Joi can be found here: https://github.com/hapijs/joi/blob/v10.6.0/API.md
+
 Documentation for using Joi with Hapi can be found here: https://hapijs.com/tutorials/validation
 
 ### API Errors
