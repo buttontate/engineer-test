@@ -10,7 +10,7 @@
   "scripts": {
     "lint": "eslint . --ext .json --ext .js",
     "start": "nodemon ./src/server.js --watch src",
-    "test": "mocha test"
+    "test": "mocha test --recursive"
   },
   "author": "",
   "license": "ISC",
