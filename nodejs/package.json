@@ -3,12 +3,12 @@
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
+  "private": true,
   "engines": {
     "node": ">=8.6.0",
     "yarn": ">=1.0.0"
   },
   "scripts": {
-    "lint": "eslint . --ext .json --ext .js",
     "start": "nodemon ./src/server.js --watch src",
     "test": "mocha test --recursive"
   },
@@ -24,7 +24,6 @@
   "devDependencies": {
     "chai": "^4.1.2",
     "chance": "^1.0.11",
-    "eslint-config-get-off-my-lawn": "^2.1.1",
     "mocha": "^4.0.1",
     "proxyquire": "^1.8.0",
     "sinon": "^4.0.1"
