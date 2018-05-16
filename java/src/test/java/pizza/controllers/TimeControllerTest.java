@@ -15,7 +15,7 @@ import pizza.repository.TimeRepository;
 
 import static org.hamcrest.Matchers.equalTo;
 import static org.mockito.Mockito.when;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @RunWith(SpringRunner.class)
@@ -35,8 +35,8 @@ public class TimeControllerTest {
 
         when(timeRepository.getTime()).thenReturn(expectedTime);
 
-        mvc.perform(MockMvcRequestBuilders.get("/time").accept(MediaType.TEXT_PLAIN))
+        mvc.perform(MockMvcRequestBuilders.get("/time").accept(MediaType.APPLICATION_JSON))
             .andExpect(status().isOk())
-            .andExpect(content().string(equalTo(expectedTime)));
+            .andExpect(jsonPath("$.currentTimestamp", equalTo(expectedTime)));
     }
 }
