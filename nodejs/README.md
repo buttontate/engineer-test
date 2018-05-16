@@ -34,11 +34,11 @@ Given: `/pizzas/{id}`
 When: An invalid DELETE request is made  
 Then: It should **not** remove the pizza with the given `id` from the menu
 
-Given: `/orders/pizzas/{id}`  
+Given: `/orders`  
 When: A valid POST request is made and a pizza with the given `id` exists  
-Then: It should create a new order using the ingredients from the pizza with the given `id`
+Then: It should create a new order using the pizza with the given `id`
 
-Given: `/orders/pizzas/{id}`  
+Given: `/orders`  
 When: An invalid POST request is made  
 Then: It should **not** create a new order
 
