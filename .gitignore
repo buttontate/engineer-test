@@ -1,8 +1,10 @@
-node_modules/
-.idea/
-package-lock.json
-.gradle/
-build/
-out/
-gradle/
 *.zip
+.gradle
+.idea
+build
+gradle
+java-test*
+node_modules
+nodejs-test*
+out
+package-lock.json
