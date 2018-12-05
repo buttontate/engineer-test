@@ -64,7 +64,7 @@ Once you have this installed, here are some of the commands you'll want to use t
 
 After running `docker-compose up --build`, the app and database will start, and the app will be live at:
 
-- `localhost:8080`, if you're taking the Java test.
+- `localhost:8080`, if you're taking the Java or C# test.
 - `localhost:5555`, if you're taking the Node test.
 
 ***Note for Linux users:*** Be sure to follow the Docker post-installation docs found [here](https://docs.docker.com/engine/installation/linux/linux-postinstall/). `docker-compose` may return errors if not configured correctly.
@@ -89,6 +89,7 @@ After you submit your solution to us, we will take the following steps to test o
 
 1. We will run all of the tests in the project. Please note that if you decided not to implement any of your own tests, we are still going to do this to make sure that any of the existing tests don't fail.
     - For the Java test, we'll run `gradle test`.
+    - For the C# test, we'll run `dotnet test ./PizzaAPI.Tests/PizzaAPI.Tests.csproj`
     - For the Node test, we'll run `yarn test`.
 2. We will destroy our current `docker-compose` environment by running `docker-compose rm -f`.
 3. We will rebuild the images so we can see the changes you made by running `docker-compose build`

@@ -1,0 +1,22 @@
+version: '3.2'
+
+services:
+    db:
+        build: ../postgres/.
+        restart: always
+        ports:
+            - 5432:5432
+        environment:
+            POSTGRES_PASSWORD: password
+    app:
+        build: .
+        restart: always
+        environment:
+            ASPNETCORE_ENVIRONMENT: Docker
+        ports:
+            - 8080:80
+    adminer:
+        image: adminer
+        restart: always
+        ports:
+            - 8929:8080
