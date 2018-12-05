@@ -1,6 +1,5 @@
 MAKEFLAGS += --silent
-all=java-test nodejs-test csharp-test
-.PHONY: all
+.PHONY: java-test nodejs-test csharp-test
 
 default:
 	echo No default rule.
