@@ -8,6 +8,7 @@ This repo is a collection of backend engineer tests implemented in different lan
 
 1. Create a zip of the language you want the candidate to complete the test in:
     - `make java-test`
+    - `make kotlin-test`
     - `make nodejs-test`
 2. Email the newly created zip file.
 

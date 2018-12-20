@@ -1,0 +1,11 @@
+*.iml
+*.ipr
+*.iws
+.idea/
+*.swp
+build/
+.gradle/
+.DS_Store
+out/
+.terraform
+terraform.tfstate.*

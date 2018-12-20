@@ -1,5 +1,5 @@
 MAKEFLAGS += --silent
-.PHONY: java-test nodejs-test csharp-test
+.PHONY: java-test kotlin-test nodejs-test csharp-test
 
 default:
 	echo No default rule.
@@ -9,6 +9,13 @@ java-test:
 	cp template/README.md java
 	zip -rX java-test.zip java postgres -x "java/out/*" "java/.gradle/*" "java/build/*" "java/gradle/*"
 	rm -f java/README.md
+	echo "Finished $@."
+
+kotlin-test:
+	rm -f kotlin-test.zip
+	cp template/README.md kotlin
+	zip -rX kotlin-test.zip kotlin postgres -x "kotlin/out/*" "kotlin/.gradle/*" "kotlin/build/*" "kotlin/gradle/*" "kotlin/.idea/*"
+	rm -f kotlin/README.md
 	echo "Finished $@."
 
 nodejs-test:
