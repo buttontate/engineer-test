@@ -1,6 +1,8 @@
 buildscript {
-    ext.kotlinVersion = '1.2.61'
-    ext.springBootVersion = '2.0.6.RELEASE'
+    ext {
+        kotlinVersion = '1.2.61'
+        springBootVersion = '2.1.2.RELEASE'
+    }
 
     repositories {
         mavenCentral()
@@ -10,7 +12,6 @@ buildscript {
         classpath "org.springframework.boot:spring-boot-gradle-plugin:${springBootVersion}"
         classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:${kotlinVersion}"
         classpath "org.jetbrains.kotlin:kotlin-allopen:${kotlinVersion}"
-        classpath 'org.junit.platform:junit-platform-gradle-plugin:1.0.1'
     }
 }
 
@@ -19,7 +20,6 @@ apply {
     plugin 'kotlin-spring'
     plugin 'org.springframework.boot'
     plugin 'io.spring.dependency-management'
-    plugin 'org.junit.platform.gradle.plugin'
     plugin 'idea'
 }
 
@@ -45,14 +45,6 @@ compileTestKotlin {
     }
 }
 
-junitPlatform {
-    filters {
-        engines {
-            include "spek"
-        }
-    }
-}
-
 dependencies {
     compile 'org.springframework.boot:spring-boot-starter-webflux'
     compile 'org.springframework.boot:spring-boot-starter-data-jpa'
@@ -64,14 +56,16 @@ dependencies {
     compile 'io.netty:netty-all:4.1.14.Final'
     compile 'org.postgresql:postgresql:42.2.4'
     runtime 'org.springframework.boot:spring-boot-devtools'
+    testCompile 'org.junit.jupiter:junit-jupiter-engine'
     testCompile 'org.springframework.boot:spring-boot-starter-test'
-    testCompile "org.jetbrains.spek:spek-api:1.1.5"
     testCompile "org.amshove.kluent:kluent:1.30"
     testCompile 'io.github.benas:random-beans:3.7.0'
     testCompile 'org.apache.commons:commons-math3:3.6.1'
-    testRuntime 'org.jetbrains.spek:spek-junit-platform-engine:1.1.5'
-    testRuntime 'org.junit.platform:junit-platform-runner:1.0.1'
     ktlint 'com.github.shyiko:ktlint:0.29.0'
+}
+
+test {
+    useJUnitPlatform()
 }
 
 task ktlint(type: JavaExec, group: "verification") {

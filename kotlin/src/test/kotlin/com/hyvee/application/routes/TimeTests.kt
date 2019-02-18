@@ -9,61 +9,76 @@ import io.github.benas.randombeans.api.EnhancedRandom.random
 import org.amshove.kluent.When
 import org.amshove.kluent.calling
 import org.amshove.kluent.itReturns
-import org.jetbrains.spek.api.Spek
-import org.jetbrains.spek.api.dsl.describe
-import org.jetbrains.spek.api.dsl.it
-import org.jetbrains.spek.api.dsl.on
 import org.junit.Assert
+import org.junit.jupiter.api.BeforeEach
+import org.junit.jupiter.api.Nested
+import org.junit.jupiter.api.Test
 import org.springframework.test.web.reactive.server.WebTestClient
 
-object TimeTests : Spek({
-    describe("TimeRoutes") {
-        lateinit var timeHandler: TimeHandler
-        lateinit var timeRepository: TimeRepository
-        lateinit var webTestClient: WebTestClient
+@Suppress("ClassName")
+class TimeTests {
+    private lateinit var timeHandler: TimeHandler
+    private lateinit var timeRepository: TimeRepository
+    private lateinit var webTestClient: WebTestClient
 
-        beforeEachTest {
-            timeRepository = mock()
-            timeHandler = TimeHandler(timeRepository)
+    @BeforeEach
+    fun beforeEach() {
+        timeRepository = mock()
+        timeHandler = TimeHandler(timeRepository)
 
-            webTestClient = WebTestClient.bindToRouterFunction(TimeRouter(timeHandler).timeRoutes())
-                .build()
-        }
+        webTestClient = WebTestClient.bindToRouterFunction(TimeRouter(timeHandler).timeRoutes())
+            .build()
+    }
 
-        on("get time when time is returned") {
-            val currentTimestamp = random(String::class.java)
+    @Nested
+    inner class GetTime {
+        @Nested
+        inner class `given time is found` {
+            private lateinit var currentTimestamp: String
 
-            When calling timeRepository.getTime() itReturns currentTimestamp
+            @BeforeEach
+            fun setupGetTime() {
+                currentTimestamp = random(String::class.java)
 
-            val actualResponse = webTestClient.get()
-                .uri("/time")
-                .exchange()
-
-            it("should return OK status code") {
-                actualResponse.expectStatus().isOk
+                When calling timeRepository.getTime() itReturns currentTimestamp
             }
 
-            it("should return current time as response body") {
+            @Test
+            fun `should return OK status code`() {
+                webTestClient.get()
+                    .uri("/time")
+                    .exchange()
+                    .expectStatus().isOk
+            }
+
+            @Test
+            fun `should return current time as response body`() {
                 val expectedTime = Time(currentTimestamp)
 
                 Assert.assertEquals(expectedTime,
-                    actualResponse
+                    webTestClient.get()
+                        .uri("/time")
+                        .exchange()
                         .expectBody(Time::class.java)
                         .returnResult().responseBody
                 )
             }
         }
 
-        on("get time when no time is found") {
-            When calling timeRepository.getTime() itReturns null
+        @Nested
+        inner class `given no time is found` {
+            @BeforeEach
+            fun setupTimeNotFound() {
+                When calling timeRepository.getTime() itReturns null
+            }
 
-            val actualResponse = webTestClient.get()
-                .uri("/time")
-                .exchange()
-
-            it("should return NOT_FOUND status") {
-                actualResponse.expectStatus().isNotFound
+            @Test
+            fun `should return NOT_FOUND status`() {
+                webTestClient.get()
+                    .uri("/time")
+                    .exchange()
+                    .expectStatus().isNotFound
             }
         }
     }
-})
+}
