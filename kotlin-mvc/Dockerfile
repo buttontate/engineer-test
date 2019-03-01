@@ -1,4 +1,4 @@
-FROM gradle:4.10.2-jdk8-alpine as builder
+FROM gradle:5.2.1-jdk8-alpine as builder
 
 WORKDIR /usr/src/app
 USER root

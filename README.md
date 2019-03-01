@@ -7,8 +7,10 @@ This repo is a collection of backend engineer tests implemented in different lan
 ## Sending a test to a candidate
 
 1. Create a zip of the language you want the candidate to complete the test in:
+    - `make csharp-test`
     - `make java-test`
-    - `make kotlin-test`
+    - `make kotlin-mvc-test`
+    - `make kotlin-webflux-test`
     - `make nodejs-test`
 2. Email the newly created zip file.
 

@@ -28,10 +28,6 @@ repositories {
     jcenter()
 }
 
-configurations {
-    ktlint
-}
-
 sourceCompatibility = 1.8
 
 compileKotlin {
@@ -46,14 +42,12 @@ compileTestKotlin {
 }
 
 dependencies {
-    compile 'org.springframework.boot:spring-boot-starter-webflux'
+    compile 'org.springframework.boot:spring-boot-starter-web'
     compile 'org.springframework.boot:spring-boot-starter-data-jpa'
-    compile 'org.springframework.boot:spring-boot-starter-actuator'
     compile "org.jetbrains.kotlin:kotlin-stdlib-jdk8:${kotlinVersion}"
     compile "org.jetbrains.kotlin:kotlin-stdlib:${kotlinVersion}"
     compile "org.jetbrains.kotlin:kotlin-reflect:${kotlinVersion}"
     compile 'com.fasterxml.jackson.module:jackson-module-kotlin'
-    compile 'io.netty:netty-all:4.1.14.Final'
     compile 'org.postgresql:postgresql:42.2.4'
     runtime 'org.springframework.boot:spring-boot-devtools'
     testCompile 'org.junit.jupiter:junit-jupiter-engine'
@@ -61,23 +55,8 @@ dependencies {
     testCompile "org.amshove.kluent:kluent:1.30"
     testCompile 'io.github.benas:random-beans:3.7.0'
     testCompile 'org.apache.commons:commons-math3:3.6.1'
-    ktlint 'com.github.shyiko:ktlint:0.29.0'
 }
 
 test {
     useJUnitPlatform()
-}
-
-task ktlint(type: JavaExec, group: "verification") {
-    description = "Check Kotlin code style."
-    classpath = configurations.ktlint
-    main = "com.github.shyiko.ktlint.Main"
-    args "src/**/*.kt"
-}
-
-task ktlintFormat(type: JavaExec, group: "formatting") {
-    description = "Fix Kotlin code style deviations."
-    classpath = configurations.ktlint
-    main = "com.github.shyiko.ktlint.Main"
-    args "-F", "src/**/*.kt"
 }

@@ -11,11 +11,18 @@ java-test:
 	rm -f java/README.md
 	echo "Finished $@."
 
-kotlin-test:
+kotlin-mvc-test:
 	rm -f kotlin-test.zip
-	cp template/README.md kotlin
-	zip -rX kotlin-test.zip kotlin postgres -x "kotlin/out/*" "kotlin/.gradle/*" "kotlin/build/*" "kotlin/gradle/*" "kotlin/.idea/*"
-	rm -f kotlin/README.md
+	cp template/README.md kotlin-mvc
+	zip -rX kotlin-test.zip kotlin-mvc postgres -x "kotlin-mvc/out/*" "kotlin-mvc/.gradle/*" "kotlin-mvc/build/*" "kotlin-mvc/gradle/*" "kotlin-mvc/.idea/*"
+	rm -f kotlin-mvc/README.md
+	echo "Finished $@."
+
+kotlin-webflux-test:
+	rm -f kotlin-test.zip
+	cp template/README.md kotlin-webflux
+	zip -rX kotlin-test.zip kotlin-webflux postgres -x "kotlin-webflux/out/*" "kotlin-webflux/.gradle/*" "kotlin-webflux/build/*" "kotlin-webflux/gradle/*" "kotlin-webflux/.idea/*"
+	rm -f kotlin-webflux/README.md
 	echo "Finished $@."
 
 nodejs-test:
